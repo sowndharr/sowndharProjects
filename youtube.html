@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+		#channelid
+		{
+		 background:#FFFFFF;
+		 height:25px;
+		 width:300px;
+		}
+		#channel
+		{
+		 background:#FFFFFF;
+		 height:25px;
+		 width:400px;
+		}
+		#search{
+		height:30px;
+		width:80px;
+		}
+	</style>
+</head>
+	<body>
+		<center>
+		<h1>Youtube video search by Channel ID</h1>
+		 <div class="row">
+		   <div class="videos">
+			
+			<input type = "text" name="channel" id="channel" placeholder="Enter the channel to be searched">
+			<select name="dropdown" id="channelid" onchange="drop()">
+				<option value="">You can select Channel ID here</option>
+				<option value="UC1Oyz877qaaqYNsNNlVM14A">UC1Oyz877qaaqYNsNNlVM14A(Tamil Movie)</option>
+				<option value="UCn2wC753SXLd2BJYLss_jlA">UCn2wC753SXLd2BJYLss_jlA(Put chutney)</option>
+				<option value="UCHGktfcQq2BY_8tGPHwvm7g">UCHGktfcQq2BY_8tGPHwvm7g(Madras samayal)</option>
+				<option value="UCGBnz-FR3qaowYsyIEh2-zw">UCGBnz-FR3qaowYsyIEh2-zw(Madras central)</option>
+				<option value="UCOquMs0QXyjbw2YMigivRAw">UCOquMs0QXyjbw2YMigivRAw(Efin cray)</option>
+			</select>
+			<br><br>
+			<input id = "search" type = "button" onclick="calll()" value="Search">
+			
+			<div id="results"></div>
+		   </div>
+		 </div>
+		</center>
+		<script>
+			function calll(){
+				var url="https://www.googleapis.com/youtube/v3/activities/?part=snippet&channelId="+document.getElementById("channel").value+
+				"&key=AIzaSyCMK4w6bNIY1NqculdpLiuJTiBivImmPCQ&maxResults=5";
+				
+				window.open(url,'windowname1','width=500,height=700');
+				loadUrl('www.google.com');
+			}
+			function drop(){
+				document.getElementById("channel").value=document.getElementById("channelid").value;
+			}
+		</script>
+	</body>
+</html>
+
+

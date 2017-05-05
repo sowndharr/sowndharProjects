@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+		#channelid
+		{
+		 background:#FFFFFF;
+		 height:25px;
+		 width:300px;
+		}
+		#channel
+		{
+		 background:#FFFFFF;
+		 height:25px;
+		 width:400px;
+		}
+		#search{
+		height:30px;
+		width:80px;
+		}
+	</style>
+</head>
+	<body onload="view()">
+		<center>
+		<h1>Youtube video search by Channel ID</h1>
+		 <div class="row">
+		   <div class="videos">
+			
+			<input type = "text" name="channel" id="channel" placeholder="Enter the channel to be searched">
+			<select name="dropdown" id="channelid" onchange="drop()">
+				<option value="">You can select Channel ID here</option>
+				<option value="UC1Oyz877qaaqYNsNNlVM14A">UC1Oyz877qaaqYNsNNlVM14A(Tamil Movie)</option>
+				<option value="UCn2wC753SXLd2BJYLss_jlA">UCn2wC753SXLd2BJYLss_jlA(Put chutney)</option>
+				<option value="UCHGktfcQq2BY_8tGPHwvm7g">UCHGktfcQq2BY_8tGPHwvm7g(Madras samayal)</option>
+				<option value="UCGBnz-FR3qaowYsyIEh2-zw">UCGBnz-FR3qaowYsyIEh2-zw(Madras central)</option>
+				<option value="UCOquMs0QXyjbw2YMigivRAw">UCOquMs0QXyjbw2YMigivRAw(Efin cray)</option>
+			</select>
+			<br><br>
+			<input id = "search" type = "button" onclick="calll()" value="Search">
+			
+			<div id="results"></div>
+			<div id="success"></div>
+			<div id="json"></div>
+		   </div>
+		 </div>
+		 <br><br><br><br>
+		 <input type = "button" onclick="view()" value="Click to view the stored data">
+		</center>
+		<script>
+			function calll(){
+				var url="https://www.googleapis.com/youtube/v3/activities/?part=snippet&channelId="+document.getElementById("channel").value+
+				"&key=AIzaSyCMK4w6bNIY1NqculdpLiuJTiBivImmPCQ&maxResults=5";
+				var Data,position,id;
+				Data = httpGet(url);
+				
+				
+				var obj = JSON.parse(Data);
+				//obj = JSON.parse('{"des":"crct"}');
+				var obj1 = JSON.parse('{"des":"crct","hi":{"o1":"oi"}}');
+				document.getElementById("success").innerHTML = "Here is ----------"+obj.kind+"------"+obj.items.id+"------"+obj.etag+"------"+obj.etag+"------"+obj.etag+"<br>";
+				//document.getElementById("json").innerHTML = Data;
+				document.getElementById("json").innerHTML = obj1.des+obj1.hi.o1;
+				//document.getElementById("demo").innerHTML = obj.name + ", " + obj.age;
+				
+				
+				position=Data.indexOf("\"id\"");
+				position+=7;
+				id="";
+				while(1){
+					if(Data[position]=="\"")
+						break;
+					id+=Data[position];
+					position++;
+				}
+				document.getElementById("results").innerHTML="Video id is : "+id;
+				localStorage.setItem("videoid", id);	
+			}
+			function drop(){
+				document.getElementById("channel").value=document.getElementById("channelid").value;
+			}
+			function httpGet(theUrl)
+			{
+				var xmlHttp = null;
+				xmlHttp = new XMLHttpRequest();
+				xmlHttp.open( "GET", theUrl, false );
+				xmlHttp.send( null );
+				return xmlHttp.responseText;
+			}
+			function view(){
+				if(localStorage.getItem("videoid")==null){
+					alert("No local Storage available...The next time you load the page after searching any videos, previously searched video id will be displayed");
+					return;
+				}
+				document.getElementById("results").innerHTML="Previously searched video id : "+localStorage.getItem("videoid");
+				alert(localStorage.getItem("videoid"));
+			}
+		</script>
+	</body>
+</html>
+
